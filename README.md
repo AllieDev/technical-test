@@ -19,7 +19,7 @@ Copy code
 To serve the production build locally, run:
 
 Copy code
-`npm run serve`
+`npm run dev`
 
 Copy code
 `npm run test`
