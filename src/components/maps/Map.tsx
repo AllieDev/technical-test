@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Map from "@arcgis/core/Map";
 import MapView from "@arcgis/core/views/MapView";
 import Scalebar from "@arcgis/core/widgets/ScaleBar";
@@ -9,6 +9,7 @@ import BasemapToggle from "@arcgis/core/widgets/BasemapToggle";
 
 export default function ArcgisMap() {
   const viewDiv = useRef(null);
+  // const [mapLoading, setMapLoading] = useState(true);
 
   useEffect(() => {
     const map = new Map({
@@ -21,6 +22,8 @@ export default function ArcgisMap() {
       zoom: 3,
       container: viewDiv.current as unknown as HTMLDivElement,
     });
+
+    // setMapLoading(false);
 
     const scalebar = new Scalebar({
       view: view,
@@ -46,11 +49,11 @@ export default function ArcgisMap() {
       nextBasemap: "hybrid",
     });
 
-    // view.ui.add(scalebar, "bottom-left");
+    view.ui.add(scalebar, "bottom-left");
 
-    // view.ui.add(compass, "top-left");
-    // view.ui.add(layerList, "top-left");
-    // view.ui.add(basemapToggle, "top-left");
+    view.ui.add(compass, "top-left");
+    view.ui.add(layerList, "top-left");
+    view.ui.add(basemapToggle, "top-left");
 
     return () => {
       if (view && map) {
