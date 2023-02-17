@@ -1,0 +1,5 @@
+// Vitest Snapshot v1
+
+exports[`Footer > should render 1`] = `"© COPYRIGHT ALI ASGHAR SULTANI - 2023"`;
+
+exports[`Loading > should render 1`] = `"© COPYRIGHT ALI ASGHAR SULTANI - 2023"`;
