@@ -9,6 +9,7 @@ import LayerList from "@arcgis/core/widgets/LayerList";
 import BasemapToggle from "@arcgis/core/widgets/BasemapToggle";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../slice";
+import Popup from "@arcgis/core/widgets/Popup";
 
 export default function ArcgisMap() {
   const viewDiv = useRef(null);
@@ -63,10 +64,16 @@ export default function ArcgisMap() {
       url: "https://services.arcgis.com/xdsHIIxuCWByZiCB/ArcGIS/rest/services/LINZ_NZ_Primary_Parcels/FeatureServer/0",
     });
 
+    const template = {
+      // NAME and COUNTY are fields in the service containing the Census Tract (NAME) and county of the feature
+      title: "Route Number {RouteNo}",
+    };
     const busRoutesChr = new FeatureLayer({
       id: "chc_bus_routes",
       url: "https://gis.ecan.govt.nz/arcgis/rest/services/Public/Bus_Routes/MapServer/2",
     });
+
+    busRoutesChr.popupTemplate = template as __esri.PopupTemplate;
 
     map.layers.add(nzPrimarySchools);
     map.layers.add(busRoutesChr);
