@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import Map from "@arcgis/core/Map";
+import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
 import MapView from "@arcgis/core/views/MapView";
 import Scalebar from "@arcgis/core/widgets/ScaleBar";
 import Home from "@arcgis/core/widgets/Home";
 import Compass from "@arcgis/core/widgets/Compass";
 import LayerList from "@arcgis/core/widgets/LayerList";
 import BasemapToggle from "@arcgis/core/widgets/BasemapToggle";
+import { useDispatch } from "react-redux";
+import { setLoading } from "../../slice";
 
 export default function ArcgisMap() {
   const viewDiv = useRef(null);
-  // const [mapLoading, setMapLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const map = new Map({
@@ -22,8 +25,6 @@ export default function ArcgisMap() {
       zoom: 3,
       container: viewDiv.current as unknown as HTMLDivElement,
     });
-
-    // setMapLoading(false);
 
     const scalebar = new Scalebar({
       view: view,
@@ -54,6 +55,21 @@ export default function ArcgisMap() {
     view.ui.add(compass, "top-left");
     view.ui.add(layerList, "top-left");
     view.ui.add(basemapToggle, "top-left");
+
+    dispatch(setLoading(false));
+
+    const nzPrimarySchools = new FeatureLayer({
+      id: "nz_primary_parcels",
+      url: "https://services.arcgis.com/xdsHIIxuCWByZiCB/ArcGIS/rest/services/LINZ_NZ_Primary_Parcels/FeatureServer/0",
+    });
+
+    const busRoutesChr = new FeatureLayer({
+      id: "chc_bus_routes",
+      url: "https://gis.ecan.govt.nz/arcgis/rest/services/Public/Bus_Routes/MapServer/2",
+    });
+
+    map.layers.add(nzPrimarySchools);
+    map.layers.add(busRoutesChr);
 
     return () => {
       if (view && map) {

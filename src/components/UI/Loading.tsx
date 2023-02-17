@@ -4,7 +4,7 @@ function Loading() {
   return (
     <div className="mapLoading">
       <LoadingButton loading variant="outlined">
-        Loading
+        Loading..
       </LoadingButton>
     </div>
   );

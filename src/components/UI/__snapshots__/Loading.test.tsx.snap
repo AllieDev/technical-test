@@ -1,0 +1,5 @@
+// Vitest Snapshot v1
+
+exports[`#App > serial test 1`] = `"Loading"`;
+
+exports[`Loading > should render 1`] = `"Loading.."`;
